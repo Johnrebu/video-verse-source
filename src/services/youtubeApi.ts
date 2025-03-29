@@ -1,5 +1,5 @@
 
-import { Video } from './mockData';
+import { Video, User } from './mockData';
 
 const YOUTUBE_API_KEY = 'AIzaSyD9SwiqJ8oCz-xecZGFNPwJJO8r53_n9KQ';
 const CHANNEL_ID = 'UCmQFI-3Pt6NJwmVDI0LDLQQ'; // johnElonSon channel ID
@@ -51,11 +51,13 @@ export const fetchChannelVideos = async (): Promise<Video[]> => {
         uploadDate: item.snippet.publishedAt,
         duration: formatDuration(Math.floor(Math.random() * 900) + 60), // Random duration
         url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-        category: determineCategory(item.snippet.title, item.snippet.description), // Add category
+        category: determineCategory(item.snippet.title, item.snippet.description),
         user: {
           id: CHANNEL_ID,
           name: item.snippet.channelTitle,
-          avatar: 'https://yt3.googleusercontent.com/ytc/AOPolaSNqyXEcMdPMvKKYnuHWmeCxzq5vHG8j-OgLlZ4=s176-c-k-c0x00ffffff-no-rj' // John Elon Son avatar
+          username: 'johnElonSon', // Adding the required username property
+          avatar: 'https://yt3.googleusercontent.com/ytc/AOPolaSNqyXEcMdPMvKKYnuHWmeCxzq5vHG8j-OgLlZ4=s176-c-k-c0x00ffffff-no-rj', // John Elon Son avatar
+          subscribers: 5000 // Adding a default subscribers count
         }
       }));
   } catch (error) {
