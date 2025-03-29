@@ -1,69 +1,65 @@
-# Welcome to your Lovable project
 
-## Project info
+# VideoVerse - A YouTube-like Platform
 
-**URL**: https://lovable.dev/projects/006f3e5c-23df-4d09-8323-734d0e650727
+VideoVerse is a modern, responsive video sharing platform built with React, TypeScript, and Tailwind CSS. This project showcases a YouTube-like user interface with key features including video browsing, searching, playback, and more.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Responsive Design**: Optimized for all screen sizes from mobile to desktop
+- **Dark Mode UI**: Sleek YouTube-inspired dark theme
+- **Video Browsing**: Browse trending and recommended videos
+- **Video Playback**: Watch videos with a YouTube-like player interface
+- **Video Recommendations**: Related videos appear alongside the currently playing video
+- **Comments System**: View and interact with comments on videos
+- **Search Functionality**: Search for videos by title, description, or category
+- **User Authentication**: Login/Signup interface ready for backend integration
+- **Video Upload**: Interface for uploading new videos
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/006f3e5c-23df-4d09-8323-734d0e650727) and start prompting.
+- **React**: Frontend library for building user interfaces
+- **TypeScript**: Type-safe JavaScript
+- **Tailwind CSS**: Utility-first CSS framework
+- **React Router**: For page navigation and routing
+- **Shadcn UI**: High-quality React components with Tailwind CSS
+- **Lucide Icons**: Beautiful icon set
+- **TanStack Query**: For data fetching and state management
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open your browser to `http://localhost:8080`
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Project Structure
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/      # Reusable UI components
+│   ├── layout/      # Layout components (Header, Sidebar, etc.)
+│   ├── ui/          # UI components from shadcn
+│   ├── video/       # Video-related components
+├── pages/           # Page components
+├── services/        # Mock data services (to be replaced with API calls)
+├── hooks/           # Custom React hooks
+├── lib/             # Utility functions
+├── App.tsx          # Main app component
+├── main.tsx         # Entry point
 ```
 
-**Edit a file directly in GitHub**
+## Future Enhancements
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- Backend API integration
+- User authentication with JWT
+- Real-time notifications
+- Video uploading with progress indicators
+- Comment replies and threading
+- User profile pages
+- Subscription management
+- Video analytics
+- Content recommendations algorithm
 
-**Use GitHub Codespaces**
+## Credits
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/006f3e5c-23df-4d09-8323-734d0e650727) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project was built with [Vite](https://vitejs.dev/), [React](https://reactjs.org/), and [Tailwind CSS](https://tailwindcss.com/).
