@@ -40,7 +40,7 @@ const Sidebar = () => {
         <h3 className="px-3 py-2 text-sm font-medium">Library</h3>
         <div className="space-y-1">
           <NavItem to="/history" icon={<History size={20} />} label="History" active={isActive('/history')} />
-          <NavItem to="/your-videos" icon={<PlaySquare size={20} />} label="Your videos" active={isActive('/your-videos')} />
+          <NavItem to="/your-videos" icon={<PlaySquare size={20} />} label="John Elon Son" active={isActive('/your-videos')} />
           <NavItem to="/watch-later" icon={<Clock size={20} />} label="Watch later" active={isActive('/watch-later')} />
           <NavItem to="/liked-videos" icon={<ThumbsUp size={20} />} label="Liked videos" active={isActive('/liked-videos')} />
         </div>

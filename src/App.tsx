@@ -12,6 +12,7 @@ import Trending from "./pages/Trending";
 import Login from "./pages/Login";
 import Upload from "./pages/Upload";
 import NotFound from "./pages/NotFound";
+import YourChannel from "./pages/YourChannel";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/trending" element={<Trending />} />
             <Route path="/login" element={<Login />} />
             <Route path="/upload" element={<Upload />} />
+            <Route path="/your-videos" element={<YourChannel />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
