@@ -1,35 +1,31 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import MainLayout from '@/components/layout/MainLayout';
 import VideoGrid from '@/components/video/VideoGrid';
-import { getVideos, Video } from '@/services/mockData';
+import { fetchChannelVideos } from '@/services/youtubeApi';
 
 const Index = () => {
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate data loading
-    const fetchVideos = async () => {
-      setLoading(true);
-      // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      const data = getVideos();
-      setVideos(data);
-      setLoading(false);
-    };
-
-    fetchVideos();
-  }, []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['channelVideos'],
+    queryFn: async () => fetchChannelVideos(),
+  });
 
   return (
     <MainLayout>
       <div className="py-4">
         <VideoGrid 
-          videos={videos} 
-          loading={loading} 
-          title="Recommended"
+          videos={data?.videos || []} 
+          loading={isLoading} 
+          title="My Channel Videos"
         />
+        
+        {error && (
+          <div className="text-center py-4">
+            <p className="text-red-500">Error loading channel videos.</p>
+            <p className="text-muted-foreground">Please try again later.</p>
+          </div>
+        )}
       </div>
     </MainLayout>
   );
