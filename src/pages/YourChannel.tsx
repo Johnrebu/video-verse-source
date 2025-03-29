@@ -10,9 +10,9 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const YourChannel = () => {
-  const { data: videos, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['channelVideos'],
-    queryFn: fetchChannelVideos,
+    queryFn: async () => fetchChannelVideos(),
   });
 
   return (
@@ -59,7 +59,7 @@ const YourChannel = () => {
                 <p className="text-muted-foreground">Please try again later.</p>
               </div>
             ) : (
-              <VideoGrid videos={videos || []} loading={isLoading} title="John Elon Son's Videos" />
+              <VideoGrid videos={data?.videos || []} loading={isLoading} title="John Elon Son's Videos" />
             )}
           </TabsContent>
           

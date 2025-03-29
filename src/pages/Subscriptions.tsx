@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import MainLayout from '@/components/layout/MainLayout';
 import VideoGrid from '@/components/video/VideoGrid';
 import { fetchChannelVideos } from '@/services/youtubeApi';
-import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { 
@@ -18,10 +17,10 @@ import {
 const Subscriptions = () => {
   const [pageToken, setPageToken] = useState<string | undefined>(undefined);
   
-  const { data, isLoading, isPreviousData, isFetching } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: ['subscriptions', pageToken],
     queryFn: () => fetchChannelVideos(pageToken),
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData,
   });
 
   const handleNextPage = () => {
