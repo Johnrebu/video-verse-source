@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bell, Menu, Search, Upload, User, LogOut } from 'lucide-react';
+import { Menu, Search, Upload, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import NotificationsDropdown from './NotificationsDropdown';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,7 +46,7 @@ const Header = () => {
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-5 w-5" />
           </Button>
-          <Link to="/" className="flex items-center gap-1">
+          <Link to="/" className="flex items-center gap-1 transition-transform hover:scale-105 duration-300">
             <span className="text-youtube-red font-bold text-2xl">Video</span>
             <span className="font-bold text-2xl">Verse</span>
           </Link>
@@ -56,14 +57,14 @@ const Header = () => {
             <Input
               type="text"
               placeholder="Search"
-              className="pr-10 rounded-r-none border-r-0 bg-secondary"
+              className="pr-10 rounded-r-none border-r-0 bg-secondary focus:ring-1 focus:ring-primary/50 transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <Button 
               type="submit" 
               variant="secondary" 
-              className="rounded-l-none h-10 px-4"
+              className="rounded-l-none h-10 px-4 transition-all hover:bg-primary hover:text-primary-foreground"
             >
               <Search className="h-4 w-4" />
             </Button>
@@ -76,38 +77,36 @@ const Header = () => {
           </Button>
           
           <Link to="/upload">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="transition-transform hover:scale-110 duration-200">
               <Upload className="h-5 w-5" />
             </Button>
           </Link>
           
-          <Button variant="ghost" size="icon">
-            <Bell className="h-5 w-5" />
-          </Button>
+          <NotificationsDropdown />
           
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
+                <Button variant="ghost" size="icon" className="rounded-full transition-transform hover:scale-110 duration-200">
                   <Avatar>
                     <AvatarFallback>{getUserInitials()}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="bg-background">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/profile" className="cursor-pointer">Profile</Link>
+                  <Link to="/profile" className="cursor-pointer transition-colors hover:bg-secondary">Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/dashboard" className="cursor-pointer">Dashboard</Link>
+                  <Link to="/dashboard" className="cursor-pointer transition-colors hover:bg-secondary">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/settings" className="cursor-pointer">Settings</Link>
+                  <Link to="/settings" className="cursor-pointer transition-colors hover:bg-secondary">Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer transition-colors hover:bg-secondary">
                   <LogOut className="h-4 w-4 mr-2" />
                   <span>Sign out</span>
                 </DropdownMenuItem>
@@ -115,7 +114,7 @@ const Header = () => {
             </DropdownMenu>
           ) : (
             <Link to="/login">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="outline" size="sm" className="gap-2 transition-transform hover:scale-105 duration-200">
                 <User className="h-4 w-4" />
                 Sign In
               </Button>

@@ -13,8 +13,19 @@ import Login from "./pages/Login";
 import Upload from "./pages/Upload";
 import NotFound from "./pages/NotFound";
 import YourChannel from "./pages/YourChannel";
+import Subscriptions from "./pages/Subscriptions";
 
-const queryClient = new QueryClient();
+// Create QueryClient with improved settings for caching
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000, // 1 minute
+      cacheTime: 5 * 60 * 1000, // 5 minutes
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -31,6 +42,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/your-videos" element={<YourChannel />} />
+            <Route path="/subscriptions" element={<Subscriptions />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

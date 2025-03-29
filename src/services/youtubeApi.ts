@@ -23,12 +23,16 @@ interface YouTubeVideo {
 
 interface YouTubeResponse {
   items: YouTubeVideo[];
+  nextPageToken?: string;
+  prevPageToken?: string;
 }
 
-export const fetchChannelVideos = async (): Promise<Video[]> => {
+// Add pagination support
+export const fetchChannelVideos = async (pageToken?: string): Promise<{videos: Video[], nextPageToken?: string}> => {
   try {
+    const pageParam = pageToken ? `&pageToken=${pageToken}` : '';
     const response = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=20`
+      `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=8${pageParam}`
     );
     
     if (!response.ok) {
@@ -38,7 +42,7 @@ export const fetchChannelVideos = async (): Promise<Video[]> => {
     const data: YouTubeResponse = await response.json();
     
     // Convert YouTube format to our app's Video format
-    return data.items
+    const videos = data.items
       .filter(item => item.id.videoId) // Only include videos with videoId
       .map(item => ({
         id: item.id.videoId,
@@ -60,8 +64,55 @@ export const fetchChannelVideos = async (): Promise<Video[]> => {
           subscribers: 5000 // Adding a default subscribers count
         }
       }));
+
+    return {
+      videos,
+      nextPageToken: data.nextPageToken
+    };
   } catch (error) {
     console.error('Error fetching YouTube videos:', error);
+    return { videos: [] };
+  }
+};
+
+// New function to fetch recommended videos based on category
+export const fetchRecommendedVideos = async (category: string): Promise<Video[]> => {
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&part=snippet,id&order=relevance&maxResults=10&q=${encodeURIComponent(category)}`
+    );
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch recommended videos');
+    }
+    
+    const data: YouTubeResponse = await response.json();
+    
+    // Convert YouTube format to our app's Video format
+    return data.items
+      .filter(item => item.id.videoId) // Only include videos with videoId
+      .map(item => ({
+        id: item.id.videoId,
+        title: item.snippet.title,
+        description: item.snippet.description,
+        thumbnail: item.snippet.thumbnails.high.url,
+        views: Math.floor(Math.random() * 100000) + 1000, // Random view count
+        likes: Math.floor(Math.random() * 10000) + 100,   // Random like count
+        dislikes: Math.floor(Math.random() * 1000) + 10,  // Random dislikes
+        uploadDate: item.snippet.publishedAt,
+        duration: formatDuration(Math.floor(Math.random() * 900) + 60), // Random duration
+        url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+        category: determineCategory(item.snippet.title, item.snippet.description),
+        user: {
+          id: item.snippet.channelTitle,
+          name: item.snippet.channelTitle,
+          username: item.snippet.channelTitle.replace(/\s+/g, '').toLowerCase(),
+          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(item.snippet.channelTitle)}&background=random`,
+          subscribers: Math.floor(Math.random() * 100000) + 1000 // Random subscribers
+        }
+      }));
+  } catch (error) {
+    console.error('Error fetching recommended videos:', error);
     return [];
   }
 };
