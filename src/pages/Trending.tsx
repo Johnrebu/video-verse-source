@@ -1,20 +1,28 @@
 
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import VideoCard from '@/components/video/VideoCard';
+import { getTrendingVideos, Video } from '@/services/mockData';
 import { Separator } from '@/components/ui/separator';
 import VideoListSkeleton from '@/components/video/VideoListSkeleton';
 import { Flame } from 'lucide-react';
-import { fetchChannelVideos } from '@/services/youtubeApi';
 
 const Trending = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['trendingChannelVideos'],
-    queryFn: async () => {
-      return await fetchChannelVideos();
-    },
-  });
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTrendingVideos = async () => {
+      setLoading(true);
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const results = getTrendingVideos();
+      setVideos(results);
+      setLoading(false);
+    };
+
+    fetchTrendingVideos();
+  }, []);
 
   return (
     <MainLayout>
@@ -25,16 +33,11 @@ const Trending = () => {
         </div>
         <Separator className="mb-4" />
 
-        {error ? (
-          <div className="text-center py-10">
-            <p className="text-red-500">Error loading trending videos.</p>
-            <p className="text-muted-foreground">Please try again later.</p>
-          </div>
-        ) : isLoading ? (
+        {loading ? (
           <VideoListSkeleton count={5} />
         ) : (
           <div className="space-y-4">
-            {data?.videos.map(video => (
+            {videos.map(video => (
               <div key={video.id} className="max-w-3xl">
                 <VideoCard video={video} horizontal />
               </div>
