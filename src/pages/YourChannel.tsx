@@ -12,7 +12,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 const YourChannel = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['channelVideos'],
-    queryFn: async () => fetchChannelVideos(),
+    queryFn: async () => {
+      return await fetchChannelVideos();
+    },
   });
 
   return (
@@ -22,9 +24,9 @@ const YourChannel = () => {
           <CardHeader className="pb-0">
             <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
               <img 
-                src="https://yt3.googleusercontent.com/ytc/AOPolaSNqyXEcMdPMvKKYnuHWmeCxzq5vHG8j-OgLlZ4=s176-c-k-c0x00ffffff-no-rj" 
+                src="/lovable-uploads/5f7f56b8-57c1-402d-849c-81453523baf8.png" 
                 alt="John Elon Son" 
-                className="w-32 h-32 rounded-full object-cover"
+                className="w-32 h-32 rounded-full object-cover border-2 border-primary/20"
               />
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold">John Elon Son</h1>

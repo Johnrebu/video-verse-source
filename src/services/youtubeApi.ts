@@ -60,7 +60,7 @@ export const fetchChannelVideos = async (pageToken?: string): Promise<{videos: V
           id: CHANNEL_ID,
           name: item.snippet.channelTitle,
           username: 'johnElonSon', // Adding the required username property
-          avatar: 'https://yt3.googleusercontent.com/ytc/AOPolaSNqyXEcMdPMvKKYnuHWmeCxzq5vHG8j-OgLlZ4=s176-c-k-c0x00ffffff-no-rj', // John Elon Son avatar
+          avatar: '/lovable-uploads/5f7f56b8-57c1-402d-849c-81453523baf8.png', // Updated avatar path
           subscribers: 5000 // Adding a default subscribers count
         }
       }));
