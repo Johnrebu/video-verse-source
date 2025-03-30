@@ -1,21 +1,43 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import MainLayout from '@/components/layout/MainLayout';
 import VideoGrid from '@/components/video/VideoGrid';
 import { fetchChannelVideos } from '@/services/youtubeApi';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Bookmark } from 'lucide-react';
+import { ExternalLink, Bookmark, BookmarkCheck } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 
 const YourChannel = () => {
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const { toast } = useToast();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ['channelVideos'],
     queryFn: async () => {
       return await fetchChannelVideos();
     },
   });
+
+  const handleSubscribe = () => {
+    setIsSubscribed(!isSubscribed);
+    
+    if (!isSubscribed) {
+      toast({
+        title: "Subscribed successfully!",
+        description: "You've subscribed to John Elon Son's channel",
+        duration: 3000,
+      });
+    } else {
+      toast({
+        title: "Unsubscribed",
+        description: "You've unsubscribed from John Elon Son's channel",
+        duration: 3000,
+      });
+    }
+  };
 
   return (
     <MainLayout>
@@ -38,9 +60,23 @@ const YourChannel = () => {
                       Visit Channel
                     </a>
                   </Button>
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <Bookmark size={16} />
-                    Subscribe
+                  <Button 
+                    variant={isSubscribed ? "default" : "outline"} 
+                    size="sm" 
+                    className="flex items-center gap-2"
+                    onClick={handleSubscribe}
+                  >
+                    {isSubscribed ? (
+                      <>
+                        <BookmarkCheck size={16} />
+                        Subscribed
+                      </>
+                    ) : (
+                      <>
+                        <Bookmark size={16} />
+                        Subscribe
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
